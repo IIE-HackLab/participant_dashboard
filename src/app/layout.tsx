@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AuthProvider } from "@/context/AuthProvider";
 import "@/globals.css";
+import "@/bones/registry";
 import type { ReactNode } from "react";
 import CustomCursor from "@/components/ui/CustomCursor";
 import Navbar from "@/components/layout/Navbar";
