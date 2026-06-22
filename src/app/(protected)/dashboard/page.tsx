@@ -10,157 +10,41 @@ import { signOutUser } from "@/lib/firebase/client";
 import Link from "next/link";
 import Image from "next/image";
 import { API_BASE_URL } from "@/lib/site";
-import { Skeleton } from "boneyard-js/react";
 
-const mockHackathons: Hackathon[] = [
-  {
-    id: "mock-1",
-    title: "Cyber Strike: Global Security",
-    tagline: "Secure the cloud. Protect the global network in this intensive 48-hour cyber sprint.",
-    date: "June 25 - June 27, 2026",
-    prize: "$5,000 USDT",
-    tags: ["Cybersecurity", "Cloud"],
-    banner: "linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(236,72,153,0.08) 100%)",
-    organizer: "IIE Tech Club",
-    slots: 12,
-    phases: [
-      { id: "p1", name: "Phase 1: Reconnaissance", description: "Submit initial threat modeling report." },
-      { id: "p2", name: "Phase 2: Exploitation & Mitigation", description: "Submit exploit proof of concept and patches." }
-    ]
-  },
-  {
-    id: "mock-2",
-    title: "AI Odyssey: Intelligent Agents",
-    tagline: "Build autonomous agent networks that solve complex coordination workflows.",
-    date: "July 02 - July 04, 2026",
-    prize: "$10,000 USD",
-    tags: ["AI/ML", "Next.js"],
-    banner: "linear-gradient(135deg, rgba(236,72,153,0.08) 0%, rgba(249,115,22,0.06) 100%)",
-    organizer: "Google DeepMind Club",
-    slots: 24,
-    phases: [
-      { id: "p1", name: "Phase 1: Proposal", description: "Design doc and system architecture." }
-    ]
-  },
-  {
-    id: "mock-3",
-    title: "DeFi Horizon: Web3 Protocol",
-    tagline: "Architect next-generation automated market makers and liquidity pools.",
-    date: "July 15 - July 18, 2026",
-    prize: "$8,500 USDC",
-    tags: ["Blockchain", "Web3"],
-    banner: "linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(249,115,22,0.06) 100%)",
-    organizer: "StarkNet Hub",
-    slots: 5,
-    phases: [
-      { id: "p1", name: "Phase 1: Smart Contracts", description: "Deploy core contract logic to testnet." }
-    ]
-  }
-];
-
-function DashboardFixture() {
-  const availableFilters = ["All", "Live", "Completed", "In Progress", "Upcoming", "Closed"];
-  const filterColors: Record<string, string> = {
-    All: "#ffffff",
-    Live: "#ec4899",
-    Completed: "#10b981",
-    "In Progress": "#f97316",
-    Upcoming: "#a855f7",
-    Closed: "#ef4444",
-  };
-
-  const mockUser = {
-    displayName: "Hacker",
-    email: "hacker@codecraft.org"
-  };
-
-  const mockProgressMap: Record<string, HackathonProgress> = {
-    "mock-1": {
-      hackathonId: "mock-1",
-      responses: { "p1": {} },
-      status: "In Progress"
-    }
-  };
-
+function DashboardSkeleton() {
   return (
-    <div className="flex flex-col min-h-screen bg-transparent">
-      {/* ── Hero Banner ── */}
-      <div className="relative h-32 sm:h-44 md:h-56 shrink-0 overflow-hidden border-b border-purple-500/15">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_120%,rgba(139,92,246,0.1)_0%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_20%,rgba(236,72,153,0.08)_0%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-linear-to-t from-[#05050a]/90 via-[#05050a]/30 to-transparent" />
-        <div className="absolute inset-0 flex flex-col justify-end">
-          <div className="max-w-7xl w-full mx-auto px-4 sm:px-5 pb-5 sm:pb-7 lg:pb-9 flex flex-row items-end justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-pink-500" />
-                <span className="font-orbitron font-bold text-[9px] sm:text-[10px] text-purple-300 uppercase tracking-[0.3em]">
-                  Agent.Verified
-                </span>
-                <span className="ml-2 px-1.5 py-0.5 bg-purple-500/10 border border-purple-500/25 font-mono text-[8px] text-purple-300">
-                  3 missions
-                </span>
+    <div className="flex flex-col min-h-[calc(100vh-68px)] bg-transparent animate-pulse">
+      {/* Hero Skeleton */}
+      <div className="relative h-40 sm:h-56 md:h-64 shrink-0 overflow-hidden border-b border-purple-500/10">
+        <div className="absolute inset-0 bg-[rgba(255,255,255,0.02)]" />
+        <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="flex-1 space-y-3">
+              <div className="h-2 w-20 bg-[rgba(255,255,255,0.05)] rounded" />
+              <div className="h-8 sm:h-12 w-48 sm:w-64 bg-[rgba(255,255,255,0.05)] rounded" />
+              <div className="h-3 w-64 sm:w-96 bg-[rgba(255,255,255,0.03)] rounded" />
+              <div className="flex gap-3 pt-1">
+                <div className="h-9 w-28 bg-[rgba(255,255,255,0.05)] rounded" />
+                <div className="h-9 w-20 bg-[rgba(255,255,255,0.02)] rounded" />
               </div>
-              <h1 className="font-orbitron font-black text-3xl sm:text-5xl md:text-6xl bg-gradient-to-r from-white via-purple-200 to-fuchsia-300 bg-clip-text text-transparent uppercase tracking-tighter leading-none mb-2 truncate">
-                {mockUser.displayName}
-              </h1>
-              <p className="font-mono-cc text-xs text-[rgba(241,240,255,0.5)] mb-3 hidden sm:flex items-center gap-2">
-                <span className="w-3 h-px bg-purple-500/40" />
-                Welcome back, {mockUser.displayName}.
-              </p>
             </div>
+            <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full bg-[rgba(255,255,255,0.03)] border-2 border-[rgba(255,255,255,0.05)] hidden sm:block" />
           </div>
         </div>
       </div>
-
-      {/* ── Filter Bar ── */}
-      <div className="border-b border-white/[0.06] bg-[#05050a]/80 backdrop-blur-md sticky top-(--nav-h) z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-5 py-3 sm:py-4 overflow-x-auto scrollbar-hide">
-          <div className="flex items-center gap-5 sm:gap-8 min-w-max">
-            <span className="font-orbitron text-[9px] font-bold text-[rgba(241,240,255,0.3)] uppercase tracking-[0.3em] flex items-center gap-2 shrink-0">
-              Filter
-            </span>
-            <div className="flex items-center gap-4 sm:gap-6">
-              {availableFilters.map((label) => {
-                const color = filterColors[label] || "#a855f7";
-                const isActive = label === "All";
-                return (
-                  <button
-                    key={label}
-                    className={`filter-btn flex items-center gap-1.5 transition-all duration-300 outline-none pb-1 ${
-                      isActive ? "opacity-100 active" : "opacity-40"
-                    }`}
-                    style={{ color: isActive ? color : undefined }}
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{
-                        background: color,
-                        transform: isActive ? "scale(1.3)" : "scale(1)",
-                      }}
-                    />
-                    <span className={`font-orbitron font-bold text-[10px] uppercase tracking-wider ${isActive ? "text-white" : "text-[rgba(241,240,255,0.8)]"}`}>
-                      {label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+      {/* Filter Skeleton */}
+      <div className="border-b border-purple-500/5 bg-[#05050a]/40 backdrop-blur-md py-4">
+        <div className="max-w-7xl mx-auto px-4 flex gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-3 w-12 bg-[rgba(255,255,255,0.03)] rounded" />
+          ))}
         </div>
       </div>
-
-      {/* ── Hackathon List ── */}
-      <main className="flex-1 w-full bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-5 py-4 sm:py-6 lg:py-8">
-          <div className="flex flex-col gap-3 sm:gap-4">
-            {mockHackathons.map((h) => (
-              <div key={h.id} className="hackathon-card-wrapper w-full">
-                <HackathonCard hackathon={h} progress={mockProgressMap[h.id]} />
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Cards Skeleton */}
+        <main className="flex-1 w-full bg-transparent max-w-7xl mx-auto px-5 py-10">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="glass-card h-28 sm:h-36 w-full" />
+        ))}
       </main>
     </div>
   );
@@ -347,7 +231,7 @@ export default function DashboardPage() {
     runFilterAnim();
   }, [activeFilter, loading]);
 
-  // Loading state is handled inline by the Skeleton wrapper below
+  if (loading) return <DashboardSkeleton />;
 
   if (authError || fetchError) {
     return (
@@ -373,8 +257,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <Skeleton name="dashboard" loading={loading} fixture={<DashboardFixture />}>
-      <div className="flex flex-col min-h-screen bg-transparent">
+    <div className="flex flex-col min-h-screen bg-transparent">
       {/* ── Hero Banner ── */}
       <div
         ref={heroRef}
@@ -537,6 +420,5 @@ export default function DashboardPage() {
         </div>
       </main>
     </div>
-    </Skeleton>
   );
 }
