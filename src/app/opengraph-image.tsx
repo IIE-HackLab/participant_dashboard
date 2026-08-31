@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site";
 
-export const alt = "IIE Tech Club CodeCraft participant dashboard";
+export const alt = "IIE HackLab CodeCraft participant dashboard";
 export const size = {
   width: 1200,
   height: 630,
@@ -44,7 +44,7 @@ export default function OpenGraphImage() {
               boxShadow: "0 0 30px #00f5ff",
             }}
           />
-          IIE Tech Club
+          IIE HackLab
         </div>
         <div
           style={{

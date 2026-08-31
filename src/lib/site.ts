@@ -9,15 +9,15 @@ export const API_BASE_URL = trimTrailingSlash(
 );
 
 export const siteConfig = {
-  name: "IIE Tech Club Participant Dashboard",
+  name: "IIE HackLab Participant Dashboard",
   shortName: "CodeCraft",
-  title: "IIE Tech Club Participant Dashboard | CodeCraft",
+  title: "IIE HackLab Participant Dashboard | CodeCraft",
   description:
-    "Join IIE Tech Club hackathons, manage CodeCraft participation, track phases, and share verified participant profiles.",
-  creator: "IIE Tech Club",
+    "Join IIE HackLab hackathons, manage CodeCraft participation, track phases, and share verified participant profiles.",
+  creator: "IIE HackLab",
   locale: "en_US",
   keywords: [
-    "IIE Tech Club",
+    "IIE HackLab",
     "CodeCraft",
     "participant dashboard",
     "student hackathon",
