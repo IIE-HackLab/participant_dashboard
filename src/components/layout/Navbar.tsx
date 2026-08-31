@@ -171,9 +171,9 @@ export default function Navbar() {
               <span className="font-charm font-black text-xl sm:text-2xl text-white group-hover:text-purple-400 transition-all duration-300 tracking-wider sm:tracking-widest uppercase whitespace-nowrap relative">
                 IIE{" "}
                 <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent animate-neon-shimmer">
-                  TECH
+                  HACK
                 </span>{" "}
-                CLUB
+                LAB
               </span>
               {/* Neon underline sweep */}
               <span

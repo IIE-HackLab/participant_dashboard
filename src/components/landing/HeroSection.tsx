@@ -124,7 +124,7 @@ export default function HeroSection() {
         {/* Subtitle */}
         <p ref={subRef} className="font-mono-cc text-sm sm:text-base md:text-lg text-[rgba(224,247,255,0.85)] max-w-prose mx-auto leading-relaxed">
           Join a vibrant community of creators and innovators. Participate in cutting-edge hackathons,
-          build amazing projects, and unlock your potential with IIE Tech Club.
+          build amazing projects, and unlock your potential with IIE HackLab.
         </p>
 
         {/* CTAs */}

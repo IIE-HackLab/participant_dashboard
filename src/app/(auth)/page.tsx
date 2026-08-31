@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { signInWithGoogle } from "@/lib/firebase/client";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import Loader from "@/components/ui/Loader";
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/logo.png";
 
 export default function LandingPage() {
   const { loading: authLoading } = useAuth();
@@ -346,9 +346,9 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 bg-[#05050a]/75 backdrop-blur-md border-b border-[rgba(255,255,255,0.06)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-purple-500/5 relative overflow-hidden group">
+            <div className="w-auto h-10 sm:h-12 flex items-center justify-center relative overflow-hidden group">
               <img
-                className="w-full h-full object-contain"
+                className="w-auto h-full object-contain drop-shadow-md"
                 src={logo.src}
                 alt="Logo"
               />
@@ -356,9 +356,9 @@ export default function LandingPage() {
             <span className="font-orbitron font-black text-sm sm:text-lg text-white tracking-widest uppercase whitespace-nowrap">
               IIE{" "}
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                TECH
+                HACK
               </span>{" "}
-              CLUB
+              LAB
             </span>
           </div>
 
@@ -403,7 +403,7 @@ export default function LandingPage() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse-dot" />
               <span className="font-orbitron font-bold text-[8.5px] sm:text-[9.5px] text-purple-300 uppercase tracking-widest">
-                IIE Tech Club — Active Hackathon Hub
+                IIE HackLab — Active Hackathon Hub
               </span>
             </div>
 

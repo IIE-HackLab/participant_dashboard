@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "IIE Tech Club Hackathon Portal",
+  title: "IIE HackLab Hackathon Portal",
   description: siteConfig.description,
   alternates: {
     canonical: "/",
   },
   openGraph: {
     url: absoluteUrl("/"),
-    title: "IIE Tech Club Hackathon Portal",
+    title: "IIE HackLab Hackathon Portal",
     description: siteConfig.description,
   },
 };
