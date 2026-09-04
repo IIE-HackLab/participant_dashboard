@@ -104,7 +104,7 @@ export default function PublicProfileClient({
             </div>
             <h1 className="font-orbitron font-black text-4xl md:text-5xl lg:text-6xl text-white uppercase tracking-tighter leading-none">
               Agent{" "}
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 {firstName}
               </span>
             </h1>
@@ -184,7 +184,7 @@ export default function PublicProfileClient({
           >
             <div className="glass-card overflow-hidden p-1.5 border-purple-500/15 group relative rounded-2xl">
               {/* Outer glow ring for avatar container */}
-              <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+              <div className="absolute -inset-1 bg-linear-to-br from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
               <div className="relative aspect-square bg-[#080811] overflow-hidden rounded-xl">
                 {profile.photoURL ? (
@@ -228,13 +228,9 @@ export default function PublicProfileClient({
                 SYSTEM METADATA
               </h3>
               <div className="space-y-3 font-mono-cc text-xs text-[rgba(241,240,255,0.6)]">
-                <div className="flex justify-between border-b border-white/[0.04] pb-2">
+                <div className="flex justify-between border-b border-white/4 pb-2">
                   <span className="opacity-50">NODE STATUS</span>
                   <span className="text-emerald-400 font-bold">ACTIVE // VERIFIED</span>
-                </div>
-                <div className="flex justify-between border-b border-white/[0.04] pb-2">
-                  <span className="opacity-50">USER ID</span>
-                  <span className="text-[10px] text-purple-300 truncate max-w-[150px]">{profile.uid}</span>
                 </div>
                 {profile.createdAt && (
                   <div className="flex justify-between pt-1">
@@ -262,7 +258,7 @@ export default function PublicProfileClient({
               </h3>
 
               <div className="relative">
-                <div className="absolute left-0 top-0 w-[1.5px] h-full bg-gradient-to-b from-purple-500/40 to-transparent" />
+                <div className="absolute left-0 top-0 w-[1.5px] h-full bg-linear-to-b from-purple-500/40 to-transparent" />
                 <p className="pl-6 font-grotesk text-[15px] sm:text-base text-[rgba(241,240,255,0.75)] leading-relaxed italic">
                   {profile.bio ||
                     "This agent has chosen to remain in the shadows, leaving no data in their narrative log. Their silence speaks volumes of their tactical focus."}
@@ -286,7 +282,7 @@ export default function PublicProfileClient({
                       {profile.collegeName || "Classified"}
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-white/[0.04]">
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-white/4">
                     <div>
                       <label className="font-mono-cc text-[9px] text-[rgba(241,240,255,0.35)] uppercase tracking-wider block mb-1">
                         Branch
@@ -345,13 +341,13 @@ export default function PublicProfileClient({
 
                   {/* Social Links */}
                   {(profile.github || profile.linkedin) && (
-                    <div className="flex gap-3 pt-3 border-t border-white/[0.04]">
+                    <div className="flex gap-3 pt-3 border-t border-white/4">
                       {profile.github && (
                         <a
                           href={profile.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-9 h-9 bg-white/[0.02] rounded-lg border border-white/[0.08] hover:border-purple-500/40 hover:bg-purple-500/5 transition-all flex items-center justify-center text-purple-300 hover:text-white"
+                          className="w-9 h-9 bg-white/2 rounded-lg border border-white/8 hover:border-purple-500/40 hover:bg-purple-500/5 transition-all flex items-center justify-center text-purple-300 hover:text-white"
                           title={`${profile.name}'s GitHub Vault`}
                         >
                           <svg
@@ -371,7 +367,7 @@ export default function PublicProfileClient({
                           href={profile.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-9 h-9 bg-white/[0.02] rounded-lg border border-white/[0.08] hover:border-purple-500/40 hover:bg-purple-500/5 transition-all flex items-center justify-center text-purple-300 hover:text-white"
+                          className="w-9 h-9 bg-white/2 rounded-lg border border-white/8 hover:border-purple-500/40 hover:bg-purple-500/5 transition-all flex items-center justify-center text-purple-300 hover:text-white"
                           title={`${profile.name}'s LinkedIn Legacy`}
                         >
                           <svg
@@ -399,7 +395,7 @@ export default function PublicProfileClient({
           className="flex justify-center mt-12 animate-fade-up"
           style={{ animationDelay: "0.3s" }}
         >
-          <div className="px-5 py-2 border border-purple-500/10 rounded-full bg-purple-500/[0.02] flex items-center gap-3">
+          <div className="px-5 py-2 border border-purple-500/10 rounded-full bg-purple-500/2 flex items-center gap-3">
             <span className="font-mono-cc text-[9px] text-[rgba(241,240,255,0.35)] uppercase tracking-widest">
               Verified CodeCraft Participant
             </span>
