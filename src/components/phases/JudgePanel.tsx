@@ -5,8 +5,7 @@ import Loader from "@/components/ui/Loader";
 import { useAuth } from "@/hooks/useAuth";
 import type { Hackathon } from "@/types/hackathon";
 import { API_BASE_URL } from "@/lib/site";
-import { toInlineUrl } from "@/lib/cloudinaryUtils";
-import PdfPreviewModal from "@/components/ui/PdfPreviewModal";
+import { getCleanViewUrl } from "@/lib/cloudinaryUtils";
 
 type SubmissionResponse = {
   projectName?: string;
@@ -54,7 +53,6 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
   const [scores, setScores] = useState<Record<string, number>>({});
   const [feedback, setFeedback] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [previewingUrl, setPreviewingUrl] = useState<string | null>(null);
 
   const fetchTeams = useCallback(async () => {
     if (!user) return;
@@ -163,7 +161,6 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
   const selectedSubmission = getSubmission(selectedReg);
 
   return (
-    <>
     <div className="glass-card p-6 md:p-10 border border-[#00f5ff]/20">
       <h2 className="text-2xl font-black text-white font-orbitron uppercase tracking-widest mb-8 border-b border-[#00f5ff]/20 pb-4">
         Judging Panel
@@ -196,18 +193,15 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
               {Object.entries(selectedSubmission || {}).map(([key, val]) => {
                 if (typeof val === 'string' && val.includes('cloudinary.com') && key !== 'banner') {
                   const isDoc = val.includes('/raw/upload/') || /\.(pdf|ppt|pptx|doc|docx)$/i.test(val);
-                  return isDoc ? (
-                    <button
+                  return (
+                    <a
                       key={key}
-                      type="button"
-                      onClick={() => setPreviewingUrl(val)}
+                      href={getCleanViewUrl(val)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-[#00f5ff] hover:underline text-sm font-mono"
                     >
-                      View PDF/PPT
-                    </button>
-                  ) : (
-                    <a key={key} href={toInlineUrl(val)} target="_blank" rel="noreferrer" className="text-[#00f5ff] hover:underline text-sm font-mono">
-                      Project Asset
+                      {isDoc ? 'View PDF/PPT ↗' : 'Project Asset ↗'}
                     </a>
                   );
                 }
@@ -296,12 +290,5 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
         </div>
       )}
     </div>
-    {previewingUrl && (
-      <PdfPreviewModal
-        url={previewingUrl}
-        onClose={() => setPreviewingUrl(null)}
-      />
-    )}
-    </>
   );
 }
