@@ -163,11 +163,15 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
               {selectedSubmission?.demoLink && (
                 <a href={selectedSubmission.demoLink} target="_blank" className="text-[#00f5ff] hover:underline text-sm font-mono">Live Demo</a>
               )}
-              {/* Add file links (PDFs, etc) */}
+              {/* Add file links (PDFs, PPTs, etc) */}
               {Object.entries(selectedSubmission || {}).map(([key, val]) => {
                 if (typeof val === 'string' && val.includes('cloudinary.com') && key !== 'banner') {
+                  const isDoc = val.includes('/raw/upload/') || /\.(pdf|ppt|pptx|doc|docx)$/i.test(val);
+                  const viewUrl = isDoc ? `https://docs.google.com/viewer?url=${encodeURIComponent(val)}` : val;
                   return (
-                    <a key={key} href={val} target="_blank" className="text-[#00f5ff] hover:underline text-sm font-mono">Project PDF/Asset</a>
+                    <a key={key} href={viewUrl} target="_blank" rel="noreferrer" className="text-[#00f5ff] hover:underline text-sm font-mono">
+                      {isDoc ? 'View PPT/PDF' : 'Project PDF/Asset'}
+                    </a>
                   );
                 }
                 return null;
