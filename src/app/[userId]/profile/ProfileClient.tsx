@@ -23,6 +23,7 @@ export default function PublicProfileClient({
   const [loading, setLoading] = useState(!initialProfile);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [showPassModal, setShowPassModal] = useState(false);
 
   const handleShare = async () => {
     try {
@@ -150,6 +151,25 @@ export default function PublicProfileClient({
               </>
             )}
             <button
+              onClick={() => setShowPassModal(true)}
+              className="btn-primary flex items-center gap-2 py-2 px-5 text-[11px] bg-purple-600/30 border-purple-500/40 hover:bg-purple-600/50"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+              DIGITAL PASS
+            </button>
+            <button
               onClick={handleShare}
               className={`btn-ghost flex items-center gap-2 py-2 px-5 text-[11px] transition-all duration-300 rounded-lg ${copied ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" : ""}`}
             >
@@ -174,6 +194,51 @@ export default function PublicProfileClient({
             </button>
           </div>
         </div>
+
+        {/* Digital Pass Modal */}
+        {showPassModal && (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-fade-in">
+            <div className="glass-card border-purple-500/30 p-6 sm:p-8 max-w-sm w-full text-center relative overflow-hidden rounded-2xl shadow-2xl">
+              <button
+                onClick={() => setShowPassModal(false)}
+                className="absolute top-4 right-4 text-purple-300/60 hover:text-white transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-mono-cc text-[10px] text-purple-300 tracking-widest uppercase">
+                  Verified Identity Pass
+                </span>
+              </div>
+
+              <h3 className="font-orbitron font-bold text-white text-lg uppercase tracking-tight mb-1">
+                {profile.name}
+              </h3>
+              <p className="font-mono-cc text-[10px] text-purple-400/80 tracking-wider mb-6">
+                UID: {profile.uid}
+              </p>
+
+              <div className="p-4 bg-white rounded-xl shadow-inner inline-block mx-auto mb-6">
+                {/* Clean QR code URL encoding student's profile */}
+                <Image
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(`https://iiehacklab.vercel.app/${profile.uid}/profile`)}`}
+                  alt={`QR Pass for ${profile.name}`}
+                  width={180}
+                  height={180}
+                  className="mx-auto"
+                />
+              </div>
+
+              <p className="font-mono-cc text-[9px] text-[rgba(241,240,255,0.5)] tracking-widest uppercase leading-relaxed">
+                Present this QR code to the scanner for Attendance & Food distribution check-in
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Profile Grid (Bento style) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
