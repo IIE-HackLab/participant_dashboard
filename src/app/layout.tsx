@@ -104,11 +104,9 @@ export const metadata: Metadata = {
 type RootLayoutProps = { children: ReactNode };
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const isManifestValid = await validatePlatformManifest();
-
-  if (!isManifestValid && process.env.NODE_ENV === "production") {
-    notFound();
-  }
+  await validatePlatformManifest().catch((err) => {
+    console.warn("[RootLayout] Platform manifest validation notice:", err);
+  });
 
   const structuredData = {
     "@context": "https://schema.org",

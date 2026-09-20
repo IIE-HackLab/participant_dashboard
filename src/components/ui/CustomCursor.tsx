@@ -20,7 +20,7 @@ const CustomCursor: React.FC = () => {
     const handlePointerMove = (e: PointerEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(true);
 
       if (dotRef.current) {
         dotRef.current.style.left = `${mouseX}px`;
@@ -53,9 +53,6 @@ const CustomCursor: React.FC = () => {
     const handlePointerLeave = () => setIsVisible(false);
     const handlePointerEnter = () => setIsVisible(true);
 
-    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
-    const handleDragStart = (e: DragEvent) => e.preventDefault();
-
     const animate = () => {
       ringX += (mouseX - ringX) * lerpFactor;
       ringY += (mouseY - ringY) * lerpFactor;
@@ -77,8 +74,6 @@ const CustomCursor: React.FC = () => {
     document.addEventListener("mouseout", handleMouseOut);
     document.addEventListener("pointerleave", handlePointerLeave);
     document.addEventListener("pointerenter", handlePointerEnter);
-    document.addEventListener("contextmenu", handleContextMenu);
-    document.addEventListener("dragstart", handleDragStart);
 
     return () => {
       cancelAnimationFrame(animationId);
@@ -89,10 +84,8 @@ const CustomCursor: React.FC = () => {
       document.removeEventListener("mouseout", handleMouseOut);
       document.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("pointerenter", handlePointerEnter);
-      document.removeEventListener("contextmenu", handleContextMenu);
-      document.removeEventListener("dragstart", handleDragStart);
     };
-  }, [isVisible]);
+  }, []);
 
   return (
     <>
