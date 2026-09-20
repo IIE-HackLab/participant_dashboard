@@ -9,6 +9,7 @@ import ErrorAlert from "@/components/ui/ErrorAlert";
 import Loader from "@/components/ui/Loader";
 import { API_BASE_URL } from "@/lib/site";
 import PdfPreviewModal from "@/components/ui/PdfPreviewModal";
+import { downloadFile } from "@/lib/cloudinaryUtils";
 
 interface Props {
   hackathon: Hackathon;
@@ -1054,17 +1055,17 @@ export default function DynamicPhase({
                                     >
                                       Preview File
                                     </button>
-                                    <a
-                                      href={String(form[field.id])}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      download
-                                      onClick={(e) => e.stopPropagation()}
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        downloadFile(String(form[field.id]));
+                                      }}
                                       className="px-2.5 py-1.5 rounded bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 font-orbitron font-bold text-[9px] uppercase transition-all"
                                       title="Download Raw File"
                                     >
                                       ⬇
-                                    </a>
+                                    </button>
                                     <span className="font-mono-cc text-[9.5px] text-[rgba(241,240,255,0.3)]">
                                       |{" "}
                                       {3 -
