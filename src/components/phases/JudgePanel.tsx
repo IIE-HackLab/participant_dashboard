@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Loader from "@/components/ui/Loader";
 import { useAuth } from "@/hooks/useAuth";
 import type { Hackathon } from "@/types/hackathon";
 import { API_BASE_URL } from "@/lib/site";
+import { toInlineUrl } from "@/lib/cloudinaryUtils";
 
 type SubmissionResponse = {
   projectName?: string;
@@ -53,7 +54,7 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
   const [feedback, setFeedback] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const fetchTeams = async () => {
+  const fetchTeams = useCallback(async () => {
     if (!user) return;
     try {
       const idToken = await user.getIdToken();
@@ -74,13 +75,38 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [hackathon.id, user]);
 
   useEffect(() => {
-    if (user) {
-      fetchTeams();
-    }
+    if (!user) return;
+    let cancelled = false;
+    const run = async () => {
+      try {
+        const idToken = await user.getIdToken();
+        const res = await fetch(
+          `${API_BASE_URL}/registrations/${hackathon.id}`,
+          { headers: { Authorization: `Bearer ${idToken}` } },
+        );
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        const withSubmissions = (data as Registration[]).filter((r) =>
+          Boolean(getSubmission(r)),
+        );
+        if (!cancelled) {
+          setTeams(withSubmissions);
+          setLoading(false);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.error(err);
+          setLoading(false);
+        }
+      }
+    };
+    run();
+    return () => { cancelled = true; };
   }, [hackathon.id, user]);
+
 
   const handleScoreChange = (param: string, value: number) => {
     setScores(prev => ({ ...prev, [param]: value }));
@@ -167,9 +193,8 @@ export default function JudgePanel({ hackathon }: { hackathon: Hackathon }) {
               {Object.entries(selectedSubmission || {}).map(([key, val]) => {
                 if (typeof val === 'string' && val.includes('cloudinary.com') && key !== 'banner') {
                   const isDoc = val.includes('/raw/upload/') || /\.(pdf|ppt|pptx|doc|docx)$/i.test(val);
-                  const viewUrl = isDoc ? `https://docs.google.com/viewer?url=${encodeURIComponent(val)}` : val;
                   return (
-                    <a key={key} href={viewUrl} target="_blank" rel="noreferrer" className="text-[#00f5ff] hover:underline text-sm font-mono">
+                    <a key={key} href={toInlineUrl(val)} target="_blank" rel="noreferrer" className="text-[#00f5ff] hover:underline text-sm font-mono">
                       {isDoc ? 'View PPT/PDF' : 'Project PDF/Asset'}
                     </a>
                   );

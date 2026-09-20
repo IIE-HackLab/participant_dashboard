@@ -8,6 +8,7 @@ import type { Phase, Hackathon } from "@/types/hackathon";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import Loader from "@/components/ui/Loader";
 import { API_BASE_URL } from "@/lib/site";
+import { toInlineUrl } from "@/lib/cloudinaryUtils";
 
 interface Props {
   hackathon: Hackathon;
@@ -1041,35 +1042,26 @@ export default function DynamicPhase({
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-2">
-                                    {(() => {
-                                      const rawUrl = String(form[field.id]);
-                                      const isDoc = rawUrl.includes('/raw/upload/') || /\.(pdf|ppt|pptx|doc|docx)$/i.test(rawUrl);
-                                      const previewUrl = isDoc ? `https://docs.google.com/viewer?url=${encodeURIComponent(rawUrl)}` : rawUrl;
-                                      return (
-                                        <>
-                                          <a
-                                            href={previewUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            onClick={(e) => e.stopPropagation()}
-                                            className="px-4 py-1.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-[#10b981] border border-emerald-500/20 font-orbitron font-bold text-[9px] uppercase tracking-widest transition-all"
-                                          >
-                                            Preview File
-                                          </a>
-                                          <a
-                                            href={rawUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            download
-                                            onClick={(e) => e.stopPropagation()}
-                                            className="px-2.5 py-1.5 rounded bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 font-orbitron font-bold text-[9px] uppercase transition-all"
-                                            title="Download Raw File"
-                                          >
-                                            ⬇
-                                          </a>
-                                        </>
-                                      );
-                                    })()}
+                                    <a
+                                      href={toInlineUrl(String(form[field.id]))}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="px-4 py-1.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-[#10b981] border border-emerald-500/20 font-orbitron font-bold text-[9px] uppercase tracking-widest transition-all"
+                                    >
+                                      Preview File
+                                    </a>
+                                    <a
+                                      href={String(form[field.id])}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      download
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="px-2.5 py-1.5 rounded bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 font-orbitron font-bold text-[9px] uppercase transition-all"
+                                      title="Download Raw File"
+                                    >
+                                      ⬇
+                                    </a>
                                     <span className="font-mono-cc text-[9.5px] text-[rgba(241,240,255,0.3)]">
                                       |{" "}
                                       {3 -
