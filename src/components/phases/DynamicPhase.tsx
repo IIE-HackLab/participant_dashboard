@@ -8,7 +8,7 @@ import type { Phase, Hackathon } from "@/types/hackathon";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import Loader from "@/components/ui/Loader";
 import { API_BASE_URL } from "@/lib/site";
-import { toInlineUrl } from "@/lib/cloudinaryUtils";
+import PdfPreviewModal from "@/components/ui/PdfPreviewModal";
 
 interface Props {
   hackathon: Hackathon;
@@ -190,6 +190,7 @@ export default function DynamicPhase({
   const [acceptedTeam, setAcceptedTeam] = useState<string | null>(null);
   const [checkingAccepted, setCheckingAccepted] = useState(true);
   const [uploadCounts, setUploadCounts] = useState<Record<string, number>>({});
+  const [previewingUrl, setPreviewingUrl] = useState<string | null>(null);
 
   // Refs to avoid unnecessary effect triggers
   const formRef = useRef(form);
@@ -662,6 +663,7 @@ export default function DynamicPhase({
   }
 
   return (
+    <>
     <div className="w-full animate-fade-up">
       {/* Phase Header */}
       <div className="mb-8">
@@ -1042,15 +1044,16 @@ export default function DynamicPhase({
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-2">
-                                    <a
-                                      href={toInlineUrl(String(form[field.id]))}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      onClick={(e) => e.stopPropagation()}
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setPreviewingUrl(String(form[field.id]));
+                                      }}
                                       className="px-4 py-1.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-[#10b981] border border-emerald-500/20 font-orbitron font-bold text-[9px] uppercase tracking-widest transition-all"
                                     >
                                       Preview File
-                                    </a>
+                                    </button>
                                     <a
                                       href={String(form[field.id])}
                                       target="_blank"
@@ -1315,5 +1318,12 @@ export default function DynamicPhase({
         </form>
       )}
     </div>
+    {previewingUrl && (
+      <PdfPreviewModal
+        url={previewingUrl}
+        onClose={() => setPreviewingUrl(null)}
+      />
+    )}
+    </>
   );
 }
