@@ -12,17 +12,16 @@
  */
 export function toInlineUrl(url: string): string {
   if (!url) return url;
-  // Already an image upload URL – serve as-is
   if (!url.includes("res.cloudinary.com")) return url;
 
-  return (
-    url
-      // Replace resource type: raw → image  (Cloudinary handles PDF/PPT inline this way)
-      .replace("/raw/upload/", "/image/upload/fl_attachment:false/")
-      // In case it was already /image/upload/ without the flag
-      .replace("/image/upload/fl_attachment:false/fl_attachment:false/", "/image/upload/fl_attachment:false/")
-  );
+  // Files uploaded as raw must stay as raw — Cloudinary rejects cross-type serving.
+  // fl_attachment:false overrides Content-Disposition to inline so the browser
+  // can render the file directly instead of forcing a download.
+  return url
+    .replace("/raw/upload/", "/raw/upload/fl_attachment:false/")
+    .replace("/raw/upload/fl_attachment:false/fl_attachment:false/", "/raw/upload/fl_attachment:false/");
 }
+
 
 /**
  * Returns true if the URL points to a document that needs special handling
